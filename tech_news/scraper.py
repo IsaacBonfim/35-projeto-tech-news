@@ -1,6 +1,7 @@
 import time
 import requests
 from requests import ReadTimeout
+from parsel import Selector
 
 
 # Requisito 1
@@ -25,7 +26,10 @@ def fetch(url):
 
 # Requisito 2
 def scrape_novidades(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(text=html_content)
+    anchor_list = selector.css("h2.entry-title a::attr(href)").getall()
+
+    return anchor_list
 
 
 # Requisito 3
