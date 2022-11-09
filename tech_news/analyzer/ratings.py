@@ -18,4 +18,23 @@ def top_5_news():
 
 # Requisito 11
 def top_5_categories():
-    """Seu código deve vir aqui"""
+    news_list = find_news()
+
+    categories_dict = {news["category"]: 0 for news in news_list}
+
+    sorted_categories = sorted(categories_dict, key=lambda category: category)
+
+    categories = {category: 0 for category in sorted_categories}
+
+    for news in news_list:
+        categories[news["category"]] += 1
+
+    categories_list = sorted(
+        categories.items(), key=lambda category: (category[1]), reverse=True
+    )
+
+    return [
+        category
+        for category, qnt in categories_list
+        if categories_list.index((category, qnt)) < 5
+    ]
